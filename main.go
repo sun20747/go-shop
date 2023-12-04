@@ -6,11 +6,12 @@ import (
 	"os"
 
 	"github.com/go-shop/config"
+	"github.com/go-shop/pkg/database"
 )
 
 func main() {
 	ctx := context.Background()
-	_ = ctx
+	// _ = ctx
 
 	// Initialize config
 
@@ -21,6 +22,9 @@ func main() {
 		return os.Args[1]
 	}())
 
-	log.Println(cfg)
+	// Database connection
+	db := database.DbConn(ctx, &cfg)
+	defer db.Disconnect(ctx)
+	log.Println(db)
 
 }
